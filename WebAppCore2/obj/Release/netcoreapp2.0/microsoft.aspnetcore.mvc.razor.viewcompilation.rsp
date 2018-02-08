@@ -1,0 +1,17 @@
+D:\Users\artrodri\source\repos\WebAppCore2\WebAppCore2
+--output-path=obj\Release\netcoreapp2.0\
+--application-name=WebAppCore2
+--content-root=D:\Users\artrodri\source\repos\WebAppCore2\WebAppCore2
+--file=D:\Users\artrodri\source\repos\WebAppCore2\WebAppCore2\Views\Cognito\ConfirmForgotPassword.cshtml
+--file=D:\Users\artrodri\source\repos\WebAppCore2\WebAppCore2\Views\Cognito\ForgotPassword.cshtml
+--file=D:\Users\artrodri\source\repos\WebAppCore2\WebAppCore2\Views\Cognito\Login.cshtml
+--file=D:\Users\artrodri\source\repos\WebAppCore2\WebAppCore2\Views\Cognito\ResetPassword.cshtml
+--file=D:\Users\artrodri\source\repos\WebAppCore2\WebAppCore2\Views\Cognito\UserAttributes.cshtml
+--file=D:\Users\artrodri\source\repos\WebAppCore2\WebAppCore2\Views\Home\About.cshtml
+--file=D:\Users\artrodri\source\repos\WebAppCore2\WebAppCore2\Views\Home\Contact.cshtml
+--file=D:\Users\artrodri\source\repos\WebAppCore2\WebAppCore2\Views\Home\Index.cshtml
+--file=D:\Users\artrodri\source\repos\WebAppCore2\WebAppCore2\Views\Shared\Error.cshtml
+--file=D:\Users\artrodri\source\repos\WebAppCore2\WebAppCore2\Views\Shared\_Layout.cshtml
+--file=D:\Users\artrodri\source\repos\WebAppCore2\WebAppCore2\Views\Shared\_ValidationScriptsPartial.cshtml
+--file=D:\Users\artrodri\source\repos\WebAppCore2\WebAppCore2\Views\_ViewImports.cshtml
+--file=D:\Users\artrodri\source\repos\WebAppCore2\WebAppCore2\Views\_ViewStart.cshtml
