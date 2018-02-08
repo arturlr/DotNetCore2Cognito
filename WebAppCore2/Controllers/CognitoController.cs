@@ -82,7 +82,6 @@ namespace WebAppCore2.Controllers
                 case "NEW_PASSWORD_REQUIRED":
                     return RedirectToAction("ResetPassword", "Cognito",
                         new { token = authResp.Value.Session, email = model.Email });
-                    break;
 
                 default:
                     ModelState.AddModelError("", "Invalid login attempt.");
