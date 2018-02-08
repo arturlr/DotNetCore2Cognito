@@ -1,0 +1,82 @@
+﻿@model WebAppCore2.Models.LoginViewModel
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<!-- LOGIN FORM -->
+<div class="logo">@ViewBag.Title</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <section id="loginForm">
+                    <form asp-controller="Cognito"
+                          asp-action="Login"
+                          asp-route-returnurl="@ViewBag.ReturnUrl"
+                          method="post"
+                          class = "form-horizontal"
+                          role = "form"
+                          id = "loginform">                    
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+                            <div class="col-md-10">
+                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+                            <div class="col-md-10">
+                                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <div class="form-group login-group-checkbox">
+                                    <input type="hidden" id="RememberMe" name="RememberMe" value="false">
+                                    <input type="checkbox" id="RememberCb" name="RememberCb">
+                                    <label for="RememberCb">Remember Me</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-6">
+                                <input type="submit" value="Log in" class="btn btn-default" />
+                            </div>
+                        </div>
+                        @*<p>
+                                @Html.ActionLink("Register as a new user", "Register")
+                            </p>*@
+                        <p>
+                            @Html.ActionLink("Forgot your password?", "ForgotPassword", "Account")
+                        </p>
+                    </form>
+                </section>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <a data-flickr-embed="true" href="https://www.flickr.com/photos/magnusl3d/6044910841/in/photolist-adaKoH-rxydSK-WwWctb-9PE3TS-dHGv3N-YitefM-Zh2aSs-dHDeiZ-ZotWZj-qUvBZQ-a4kyT9-Xc2dWu-oXJMqt-6RPRzi-8DcMDN-MoPbG-qRME5b-bcq7i2-2vTkxL-WohGbr-adhutk-FhVtSb-UrwCeT-Wwn4AE-6PDESN-9qmmHH-9WVuDU-9cUuLH-otdmBa-5Lozak-qjZXhr-ea8qvk-bs4X6y-VQcrG3-CGjxwg-p7YGTf-e1LgS9-VmmF6V-Wwn5AW-5XLiKh-VoeayR-dT44kC-9kW6i2-fzzwG4-ep1J5y-VZEv2L-VWg2j9-nhjRDJ-aXAQv4-q8QDau" title="Downtown Vancouver Sunset"><img src="https://farm7.staticflickr.com/6073/6044910841_f8bda02f01_n.jpg" width="320" height="213" alt="Downtown Vancouver Sunset"></a>
+                <script async src="//embedr.flickr.com/assets/client-code.js" charset="utf-8"></script>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+
+    <script>
+                $('#RememberCb').on("click", function () {
+                    console.log($("#RememberCb").prop('checked'));
+                    $("#RememberMe").val($("#RememberCb").prop('checked'));
+                });
+               
+    </script>
+
+}

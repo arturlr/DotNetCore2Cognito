@@ -1,0 +1,15 @@
+﻿@model WebAppCore2.Models.AwsIdentityUser
+@{
+    ViewData["Title"] = "UserAttributes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>UserAttributes</h2>
+
+
+<p>Id: @Model.Sub</p>
+<p>Full Name: @Model.Full_Name</p>
+<p>Email: @Model.Email</p>
+<p>Status: @Model.Status.Value</p>
+
+
