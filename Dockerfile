@@ -1,4 +1,4 @@
-FROM microsoft/aspnetcore-build:2.0.0 AS build-env
+FROM microsoft/aspnetcore-build:2.0.0 as builder
 WORKDIR /app
 
 # Copy csproj and restore as distinct layers
@@ -12,6 +12,6 @@ RUN dotnet publish -c Release -o out
 # Build runtime image
 FROM microsoft/aspnetcore:2.0
 WORKDIR /app
-COPY --from=build-env /app/out .
+COPY --from=builder /app/out .
 
 ENTRYPOINT ["dotnet", "WebAppCore2.dll"]

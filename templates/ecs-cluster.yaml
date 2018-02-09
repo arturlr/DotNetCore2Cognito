@@ -34,7 +34,7 @@ Mappings:
       AMI: ami-509a053f
     ap-northeast-1:
       AMI: ami-872c4ae1
-	ap-northeast-2:
+    ap-northeast-2:
       AMI: ami-c212b2ac
     ap-southeast-1:
       AMI: ami-910d72ed

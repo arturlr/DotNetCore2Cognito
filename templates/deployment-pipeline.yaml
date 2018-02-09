@@ -144,6 +144,7 @@ Resources:
           phases: 
             build:
               commands:
+                - TAG="$(echo $(date +%y%m%d-%H%M))"
                 - echo "Building the final container ${REPOSITORY_URI}:${TAG}"
                 - docker build -f Dockerfile --tag "${REPOSITORY_URI}:${TAG}" .
             post_build:
