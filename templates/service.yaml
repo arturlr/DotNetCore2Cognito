@@ -3,14 +3,7 @@ Parameters:
     Type: String
     Default: latest
 
-  NginxTag:
-    Type: String
-    Default: latest
-
   WebAppRepository:
-    Type: String
-
-  NginxRepository:
     Type: String
 
   DesiredCount:
@@ -58,7 +51,7 @@ Resources:
       DesiredCount: !Ref DesiredCount
       TaskDefinition: !Ref TaskDefinition
       LoadBalancers:
-        - ContainerName: nginx
+        - ContainerName: webapp
           ContainerPort: 80
           TargetGroupArn: !Ref TargetGroup
 
@@ -74,23 +67,6 @@ Resources:
       Family: !Sub ${AWS::StackName}-dotnetapp
       TaskRoleArn: !Ref ECSTaskRole
       ContainerDefinitions:
-        - Name: nginx
-          Links: ["webapp"]
-          Image: !Sub ${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/${NginxRepository}:${NginxTag}
-          Essential: true
-          Memory: 128
-          Cpu: 1
-          LogConfiguration:
-            LogDriver: awslogs
-            Options:
-              awslogs-group: !Ref 'CloudwatchLogsGroup'
-              awslogs-region: !Ref 'AWS::Region'
-              awslogs-stream-prefix: !Ref Cluster
-          PortMappings:
-            - ContainerPort: 80
-          Environment:
-            - Name: Tag
-              Value: !Ref NginxTag
         - Name: webapp
           Image: !Sub ${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/${WebAppRepository}:${WebAppTag}
           Essential: true
@@ -102,6 +78,8 @@ Resources:
               awslogs-group: !Ref 'CloudwatchLogsGroup'
               awslogs-region: !Ref 'AWS::Region'
               awslogs-stream-prefix: !Ref Cluster
+          PortMappings:
+            - ContainerPort: 80
           Environment:
             - Name: Tag
               Value: !Ref WebAppTag

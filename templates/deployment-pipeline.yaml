@@ -141,12 +141,23 @@ Resources:
         Type: CODEPIPELINE
         BuildSpec: |
           version: 0.2
-          phases: 
-            build:
+          phases:
+            pre_build:
               commands:
                 - TAG="$(echo $(date +%y%m%d-%H%M))"
+                - echo "TAG:${REPOSITORY_URI}:${TAG}"
+                - BUILDNAME="aspnetcore-build"
+                - BUILDFINAL="aspnetcore-build-container"
+                - echo "Running Dockerbuild.build"
+                - docker build -f Dockerfile.build -t ${BUILDNAME} .
+                - echo "Creating container with the build"
+                - docker create --name ${BUILDFINAL} ${BUILDNAME}
+                - echo "Copying publish files"
+                - docker cp "${BUILDFINAL}:/out" ./publish
+            build:
+              commands:
                 - echo "Building the final container ${REPOSITORY_URI}:${TAG}"
-                - docker build -f Dockerfile --tag "${REPOSITORY_URI}:${TAG}" .
+                - docker build -f Dockerfile.final --tag "${REPOSITORY_URI}:${TAG}" .
             post_build:
               commands:
                 - $(aws ecr get-login)
@@ -198,7 +209,7 @@ Resources:
               RunOrder: 1
               Configuration:
                 S3Bucket: !Ref TemplateBucket
-                S3ObjectKey: templates.zip            
+                S3ObjectKey: singlecontainer-templates/templates.zip            
 
         - Name: Build
           Actions:

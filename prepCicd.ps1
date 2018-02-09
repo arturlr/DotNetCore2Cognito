@@ -83,12 +83,12 @@ git push origin master
 #
 Write-Host "Creating CloudFormation Stack"
 
-$AWSCF = Get-CFNStackSetList -ProfileName $profilename
+$AWSCF = Get-CFNStackSetList -ProfileName $profilename -Region $region
 
 Write-Host $AWSCF
 
-New-CFNStack -StackName $stackname ` 
+New-CFNStack -StackName $stackname `
     -TemplateURL https://s3.amazonaws.com/${bucketname}/singlecontainer-templates/ecs-dotnetcore-continuous-deployment.yaml `
     -Parameter @( @{ ParameterKey="SourceBucket"; ParameterValue="$bucketname"}, @{ ParameterKey="CodeCommitRepositoryName"; ParameterValue="WebAppSingleContainer" }) `
     -Capability "CAPABILITY_IAM" `
-    -Region $region
+    -Region $region -ProfileName $profilename
