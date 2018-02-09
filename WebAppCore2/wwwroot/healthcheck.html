@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <div>Host: <span id="hostName"></span></div>
+    <div>DateTime: <span id="curDatetTime"></span></div>
+    <script type="text/javascript">
+        var curhost = location.hostname;
+        var curtime = new Date().toLocaleString();
+        document.getElementById('hostName').innerHTML = curhost;
+        document.getElementById('curDatetTime').innerHTML = curtime;
+    </script>
+</body>
+</html>
