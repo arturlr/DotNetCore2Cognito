@@ -136,7 +136,7 @@ namespace WebAppCore2.Controllers
         }
 
         [AllowAnonymous]
-        public IActionResult ForgottPassword(string token, string email)
+        public IActionResult ForgotPassword(string token, string email)
         {
             var resetPass = new ResetPasswordViewModel();
             resetPass.Email = email;
