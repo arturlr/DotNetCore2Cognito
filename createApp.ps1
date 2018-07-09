@@ -1,5 +1,3 @@
-###
-# Visual Studio should publish a MSDEPLOY package to d:\phoursPkg dir
 param (
   [Parameter(Mandatory=$true)][string]$profilename,
   [Parameter(Mandatory=$true)][string]$region,
@@ -26,6 +24,7 @@ elseif (![String]::IsNullOrEmpty($BLOC) -and $BLOC -ne $region)
 }
 
 Set-DefaultAWSRegion $region
+set AWS_PROFILE=$profilename
 
 $CURDIR = Get-Location
 $DATESUFFIX=[datetime]::Now.ToString('yy-MMM-dd-HHmm')
@@ -44,8 +43,8 @@ if (Test-Path $ZIPFILE) {
 }
 Add-Type -assembly "system.io.compression.filesystem"
 [io.compression.zipfile]::CreateFromDirectory($TEMPLATES, $ZIPFILE)
-Write-S3Object -bucketname $bucketname -Key singlecontainer-templates/templates.zip -File $ZIPFILE -ProfileName $profilename
-Write-S3Object -bucketname $bucketname -KeyPrefix singlecontainer-templates -Folder $TEMPLATES -Recurse -ProfileName $profilename
+Write-S3Object -bucketname $bucketname -Key aspnetcognito-template/templates.zip -File $ZIPFILE -ProfileName $profilename
+Write-S3Object -bucketname $bucketname -KeyPrefix aspnetcognito-template -Folder $TEMPLATES -Recurse -ProfileName $profilename
 
 #
 # Preparing AWS CodeCommit
@@ -54,17 +53,16 @@ Write-Host "Creating AWS CodeCommit"
 
 $AWSCC = Get-CCRepositoryList -ProfileName $profilename -Region $region.ToLower()
 Write-Host $AWSCC
-if ($AWSCC.RepositoryName -eq "WebAppSingleContainer")
+if ($AWSCC.RepositoryName -eq "WebAppCognito")
 {
-    Remove-CCRepository -RepositoryName "WebAppSingleContainer" -Force -ProfileName $profilename
+    Remove-CCRepository -RepositoryName "WebAppCognito" -Force -ProfileName $profilename
 }
 
-New-CCRepository -RepositoryName "WebAppSingleContainer" -RepositoryDescription "WebApp for .netcore2 cicd demo - Single Container" -ProfileName $profilename
+New-CCRepository -RepositoryName "WebAppCognito" -RepositoryDescription "WebApp for .netcore2 cicd demo - Single Container" -ProfileName $profilename
 
 #
 # Preparing WebApp
 #
-
 
 if (Test-Path "${WEBAPP}\.git") {
     Write-Host "Removing .git"
@@ -73,7 +71,7 @@ if (Test-Path "${WEBAPP}\.git") {
 
 Write-Host "Initializing git"
 git init
-git remote add origin ssh://git-codecommit.$region.amazonaws.com/v1/repos/WebAppSingleContainer
+git remote add origin ssh://git-codecommit.$region.amazonaws.com/v1/repos/WebAppCognito
 git add *
 git commit -m "Inital commit"
 git push origin master
@@ -88,7 +86,7 @@ $AWSCF = Get-CFNStackSetList -ProfileName $profilename -Region $region
 Write-Host $AWSCF
 
 New-CFNStack -StackName $stackname `
-    -TemplateURL https://s3.amazonaws.com/${bucketname}/singlecontainer-templates/ecs-dotnetcore-continuous-deployment.yaml `
+    -TemplateURL https://s3.amazonaws.com/${bucketname}/aspnetcognito-template/ecs-dotnetcore-continuous-deployment.yaml `
     -Parameter @( @{ ParameterKey="SourceBucket"; ParameterValue="$bucketname"}, @{ ParameterKey="CodeCommitRepositoryName"; ParameterValue="WebAppSingleContainer" }) `
     -Capability "CAPABILITY_IAM" `
     -Region $region -ProfileName $profilename

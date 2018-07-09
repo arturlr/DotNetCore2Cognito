@@ -8,7 +8,7 @@ Parameters:
 
   CodeCommitRepositoryName:
     Type: String
-    Default: webapp
+    Default: WebAppCognito
     Description: The repo name of the DotNetWeb App.
 
   CodeCommitBranch:
@@ -43,7 +43,7 @@ Resources:
           - ''
           - - 'https://s3.amazonaws.com/'
             - !Ref SourceBucket
-            - '/singlecontainer-templates/ecs-cluster.yaml'
+            - '/aspnetcognito-template/ecs-cluster.yaml'
       Parameters:
         SourceSecurityGroup: !GetAtt LoadBalancer.Outputs.SecurityGroup
         Subnets: !GetAtt VPC.Outputs.Subnets
@@ -57,7 +57,7 @@ Resources:
           - ''
           - - 'https://s3.amazonaws.com/'
             - !Ref SourceBucket
-            - '/singlecontainer-templates/deployment-pipeline.yaml'
+            - '/aspnetcognito-template/deployment-pipeline.yaml'
       Parameters:
         Cluster: !GetAtt Cluster.Outputs.ClusterName
         ECSTaskRole: !GetAtt Cluster.Outputs.ECSTaskRoleArn
@@ -74,7 +74,7 @@ Resources:
           - ''
           - - 'https://s3.amazonaws.com/'
             - !Ref SourceBucket
-            - '/singlecontainer-templates/load-balancer.yaml'
+            - '/aspnetcognito-template/load-balancer.yaml'
       Parameters:
         Subnets: !GetAtt VPC.Outputs.Subnets
         VpcId: !GetAtt VPC.Outputs.VpcId
@@ -87,7 +87,7 @@ Resources:
           - ''
           - - 'https://s3.amazonaws.com/'
             - !Ref SourceBucket
-            - '/singlecontainer-templates/vpc.yaml'
+            - '/aspnetcognito-template/vpc.yaml'
       Parameters:
         Name: !Ref AWS::StackName
         VpcCIDR: 10.215.0.0/16
