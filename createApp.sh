@@ -93,7 +93,7 @@ aws s3 cp nginx.zip s3://${BUCKET}/aspnetcognito-template/nginx.zip
 #
 echo "Packaging AWS CodeCommit"
 
-AWSCC="$(aws codecommit list-repositories --region ${AWSREGION}| grep WebAppSingleContainer)"
+AWSCC="$(aws codecommit list-repositories --region ${AWSREGION}| grep WebAppCognito)"
 if [[ "${#AWSCC}" > 1 ]]; then
    aws codecommit delete-repository --repository-name WebAppCognito --region ${AWSREGION}
    echo "Sleeping for 15 seconds for delete to complete"
