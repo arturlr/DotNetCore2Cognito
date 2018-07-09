@@ -2,11 +2,14 @@
   "Logging": {
     "IncludeScopes": false,
     "LogLevel": {
-      "Default": "Warning"
+      "Default": "Debug",
+      "System": "Information",
+      "Microsoft": "Information"
     }
   },
   "AWS": {
-    "Region": "us-west-2"
+    "Profile": "myprofile",
+    "Region": "aws-region"
   },
   "AppSettings": {
     "PoolId": "us-west-2_xxxxxx",
