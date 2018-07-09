@@ -96,8 +96,7 @@ echo "Packaging AWS CodeCommit"
 AWSCC="$(aws codecommit list-repositories --region ${AWSREGION}| grep WebAppCognito)"
 if [[ "${#AWSCC}" > 1 ]]; then
    aws codecommit delete-repository --repository-name WebAppCognito --region ${AWSREGION}
-   echo "Sleeping for 15 seconds for delete to complete"
-   sleep 15s
+   sleep 2s
 fi
 
 aws codecommit create-repository --repository-name WebAppCognito \
@@ -132,10 +131,9 @@ git push origin master
 echo "Creating CloudFormation Stack"
 AWSCF="$(aws cloudformation list-stacks --region ${AWSREGION} | grep ${STACKNAME} --count)"
 if [[ "${#AWSFC}" > 1 ]]; then
-   aws cloudformation delete-stack --stack-name ${STACKNAME} \
-      --region ${AWSREGION}
-   echo "Waiting for completion..."
-   aws cloudformation stack-delete-complete --stack-name ${STACKNAME}
+   aws cloudformation delete-stack --stack-name ${STACKNAME} --region ${AWSREGION}
+   echo "A delete-stack was issued, pls re-run the script once the stack is deleted or execute the script with a diferent stackname"
+   exit 1
 fi
 
 aws cloudformation create-stack --stack-name ${STACKNAME} \
