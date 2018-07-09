@@ -209,7 +209,7 @@ Resources:
               RunOrder: 1
               Configuration:
                 S3Bucket: !Ref TemplateBucket
-                S3ObjectKey: singlecontainer-templates/templates.zip            
+                S3ObjectKey: aspnetcognito-template/templates.zip            
 
         - Name: Build
           Actions:

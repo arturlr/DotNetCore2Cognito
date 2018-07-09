@@ -140,6 +140,5 @@ fi
 
 aws cloudformation create-stack --stack-name ${STACKNAME} \
    --template-url https://s3.amazonaws.com/${BUCKET}/aspnetcognito-template/ecs-dotnetcore-continuous-deployment.yaml \
-   --parameters ParameterKey=SourceBucket,ParameterValue=${BUCKET} \
-   --capabilities CAPABILITY_IAM \
-   --region ${AWSREGION}
+   --parameters ParameterKey=SourceBucket,ParameterValue=${BUCKET} --capabilities CAPABILITY_IAM \
+   --region us-west-2 --profile ${PROFILE}
