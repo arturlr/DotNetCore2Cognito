@@ -130,7 +130,7 @@ git push origin master
 # Creating Stack
 #
 echo "Creating CloudFormation Stack"
-AWSCF="$(aws cloudformation list-stacks --region ${AWSREGION} | grep ${STACKNAME})"
+AWSCF="$(aws cloudformation list-stacks --region ${AWSREGION} | grep ${STACKNAME} --count)"
 if [[ "${#AWSFC}" > 1 ]]; then
    aws cloudformation delete-stack --stack-name ${STACKNAME} \
       --region ${AWSREGION}
