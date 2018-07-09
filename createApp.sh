@@ -86,7 +86,7 @@ cd ${NGINX}
 pwd
 rm *.zip
 zip nginx *
-aws s3 cp nginx.zip s3://${BUCKET}/nginx.zip
+aws s3 cp nginx.zip s3://${BUCKET}/aspnetcognito-template/nginx.zip
 
 #
 # Preparing AWS CodeCommit
