@@ -57,6 +57,11 @@ else
     echo "using default profile"
 fi
 
+if [[ "${#STACKNAME}" == 0 ]]; then
+    echo "No stackname"
+    exit 1
+fi
+
 read curdir <<< $(pwd)
 DATESUFFIX=$(date +%Y-%b-%d-%H%M)
 TEMPLATES="${curdir}"/templates
@@ -129,14 +134,14 @@ git push origin master
 # Creating Stack
 #
 echo "Creating CloudFormation Stack"
-AWSCF="$(aws cloudformation list-stacks --region ${AWSREGION} | grep ${STACKNAME} --count)"
+AWSCF="$(aws cloudformation list-stacks --region ${AWSREGION} | grep ${STACKNAME} -c)"
 if [[ "${#AWSFC}" > 1 ]]; then
    aws cloudformation delete-stack --stack-name ${STACKNAME} --region ${AWSREGION}
    echo "A delete-stack was issued, pls re-run the script once the stack is deleted or execute the script with a diferent stackname"
    exit 1
 fi
 
-aws cloudformation create-stack --stack-name ${STACKNAME} \
-   --template-url https://s3.amazonaws.com/${BUCKET}/aspnetcognito-template/ecs-dotnetcore-continuous-deployment.yaml \
-   --parameters ParameterKey=SourceBucket,ParameterValue=${BUCKET} --capabilities CAPABILITY_IAM \
-   --region us-west-2 --profile ${PROFILE}
+aws cloudformation create-stack --stack-name "${STACKNAME}" \
+   --template-url "https://s3.amazonaws.com/${BUCKET}/aspnetcognito-template/ecs-dotnetcore-continuous-deployment.yaml" \
+   --parameters ParameterKey=SourceBucket,ParameterValue=${BUCKET} \
+   --capabilities CAPABILITY_IAM --region ${AWSREGION} --profile ${PROFILE}

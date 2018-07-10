@@ -149,7 +149,8 @@ Resources:
                 - docker build -t "${REPOSITORY_URI}:${TAG}" .
             post_build:
               commands:
-                - $(aws ecr get-login)
+                - echo Logging in to Amazon ECR...
+                - $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
                 - docker push "${REPOSITORY_URI}:${TAG}"
                 - printf '{"tag":"%s"}' $TAG > build.json
           artifacts:
